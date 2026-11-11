@@ -1,0 +1,62 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Student Pastoral Assignment API",
+    "version": "1.0.0"
+  },
+  "servers": [{ "url": "http://127.0.0.1:4201/api" }],
+  "paths": {
+    "/wellbeing/students/{studentKey}/pastoral-assignment": {
+      "get": {
+        "parameters": [
+          { "$ref": "#/components/parameters/StudentKey" },
+          { "$ref": "#/components/parameters/AsAtDate" }
+        ],
+        "responses": { "200": { "$ref": "#/components/responses/Success" }, "400": { "$ref": "#/components/responses/Error" }, "404": { "$ref": "#/components/responses/Error" } }
+      },
+      "post": {
+        "parameters": [{ "$ref": "#/components/parameters/StudentKey" }],
+        "requestBody": { "required": true, "content": { "application/json": { "schema": { "$ref": "#/components/schemas/AssignmentRequest" } } } },
+        "responses": { "201": { "$ref": "#/components/responses/Success" }, "400": { "$ref": "#/components/responses/Error" }, "403": { "$ref": "#/components/responses/Error" } }
+      }
+    },
+    "/wellbeing/students/{studentKey}/pastoral-history": {
+      "get": {
+        "parameters": [{ "$ref": "#/components/parameters/StudentKey" }],
+        "responses": { "200": { "$ref": "#/components/responses/Success" } }
+      }
+    },
+    "/org/houses": {
+      "get": { "responses": { "200": { "$ref": "#/components/responses/Success" } } },
+      "post": {
+        "requestBody": { "required": true, "content": { "application/json": { "schema": { "$ref": "#/components/schemas/HouseRequest" } } } },
+        "responses": { "201": { "$ref": "#/components/responses/Success" } }
+      }
+    },
+    "/org/pastoral-groups": {
+      "get": { "responses": { "200": { "$ref": "#/components/responses/Success" } } },
+      "post": {
+        "requestBody": { "required": true, "content": { "application/json": { "schema": { "$ref": "#/components/schemas/GroupRequest" } } } },
+        "responses": { "201": { "$ref": "#/components/responses/Success" } }
+      }
+    },
+    "/org/staff": {
+      "get": { "parameters": [{ "name": "search", "in": "query", "schema": { "type": "string" } }, { "name": "limit", "in": "query", "schema": { "type": "integer" } }, { "name": "offset", "in": "query", "schema": { "type": "integer" } }], "responses": { "200": { "$ref": "#/components/responses/Success" } } }
+    }
+  },
+  "components": {
+    "parameters": {
+      "StudentKey": { "name": "studentKey", "in": "path", "required": true, "schema": { "type": "integer", "format": "int64" } },
+      "AsAtDate": { "name": "asAtDate", "in": "query", "schema": { "type": "string", "format": "date" } }
+    },
+    "schemas": {
+      "AssignmentRequest": { "type": "object", "required": ["effectiveFrom"], "properties": { "houseKey": { "type": "integer" }, "pastoralGroupKey": { "type": "integer" }, "effectiveFrom": { "type": "string", "format": "date" }, "effectiveTo": { "type": "string", "format": "date", "nullable": true } } },
+      "HouseRequest": { "type": "object", "required": ["houseCode", "houseName"], "properties": { "houseCode": { "type": "string" }, "houseName": { "type": "string" } } },
+      "GroupRequest": { "type": "object", "required": ["pastoralGroupCode", "pastoralGroupName"], "properties": { "pastoralGroupCode": { "type": "string" }, "pastoralGroupName": { "type": "string" } } }
+    },
+    "responses": {
+      "Success": { "description": "Successful response", "content": { "application/json": { "schema": { "type": "object", "required": ["success", "data"], "properties": { "success": { "type": "boolean" }, "data": {} } } } } },
+      "Error": { "description": "Error response", "content": { "application/json": { "schema": { "type": "object", "properties": { "success": { "type": "boolean" }, "error": { "type": "string" } } } } } }
+    }
+  }
+}

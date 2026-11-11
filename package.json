@@ -1,0 +1,17 @@
+{
+  "name": "class-performance-api",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "node server.mjs",
+    "test:organisation": "node organisation-api.test.mjs",
+    "test:progression-points": "node --test progression-points-routes.test.mjs"
+  },
+  "dependencies": {
+    "dotenv": "^18.0.5",
+    "express": "^5.2.1",
+    "msnodesqlv8": "^5.5.0",
+    "mssql": "^12.7.4"
+  }
+}
