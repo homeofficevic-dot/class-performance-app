@@ -78,3 +78,4 @@ The class-performance staff endpoint also returns the Compass `roleInSchool` and
 `GET /api/compass/classes/{classSourcedId}/attendance-analytics` also accepts optional `campusId=<Compass campus ID>` and the optional UTC `startDate`/`endDate` range (inclusive start, exclusive end). When supplied, both the class attendance charts and student statistics are limited to the selected date range and, when provided, students assigned to that campus. The Class Profile campus and reporting-period selectors request matching analytics for the selected class.
 
 Run [`create-attendance-person-index.sql`](./create-attendance-person-index.sql) to improve the performance of attendance aggregation and campus/person lookups. The student attendance details endpoint does not require the attendance-person index to exist.
+# class-performance-app
